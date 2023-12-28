@@ -10,6 +10,7 @@ export default async function MainLayout({ children }: MainLayoutProps) {
     <div className="container">
       <Navbar />
       {children}
+      <FloatNav />
     </div>
   )
 }

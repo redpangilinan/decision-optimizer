@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -23,11 +22,7 @@ export function FloatNav() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <div>
-            <DecisionAddButton variant="ghost" />
-          </div>
-        </DropdownMenuItem>
+        <DecisionAddButton variant="ghost" />
       </DropdownMenuContent>
     </DropdownMenu>
   )

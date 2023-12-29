@@ -6,17 +6,17 @@ import { toast } from "sonner"
 
 import { generateId } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
 import { Icons } from "@/components/icons"
+import {
+  ResponsiveModal,
+  ResponsiveModalClose,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalFooter,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalTrigger,
+} from "@/components/responsive-modal"
 
 interface DecisionAddButtonProps {
   variant?: ButtonVariants
@@ -38,24 +38,28 @@ export function DecisionAddButton({ variant }: DecisionAddButtonProps) {
   }
 
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
+    <ResponsiveModal>
+      <ResponsiveModalTrigger asChild>
         <Button variant={variant}>
           <Icons.add className="mr-2 h-4 w-4" />
           <span>Add Decision</span>
         </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Do you want to create a new decision?</DrawerTitle>
-          <DrawerDescription>This will add a new card.</DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter>
-          <DrawerClose asChild>
+      </ResponsiveModalTrigger>
+      <ResponsiveModalContent>
+        <ResponsiveModalHeader>
+          <ResponsiveModalTitle>
+            Do you want to create a new decision?
+          </ResponsiveModalTitle>
+          <ResponsiveModalDescription>
+            This will add a new card.
+          </ResponsiveModalDescription>
+        </ResponsiveModalHeader>
+        <ResponsiveModalFooter>
+          <ResponsiveModalClose asChild>
             <Button onClick={() => createDecision()}>Create</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          </ResponsiveModalClose>
+        </ResponsiveModalFooter>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   )
 }

@@ -5,17 +5,17 @@ import { ButtonVariants } from "@/types"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
 import {
-  ResponsiveModal,
-  ResponsiveModalClose,
-  ResponsiveModalContent,
-  ResponsiveModalDescription,
-  ResponsiveModalFooter,
-  ResponsiveModalHeader,
-  ResponsiveModalTitle,
-  ResponsiveModalTrigger,
-} from "@/components/responsive-modal"
+  Credenza,
+  CredenzaClose,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger,
+} from "@/components/ui/credenza"
+import { Icons } from "@/components/icons"
 
 interface DecisionDeleteButtonProps {
   variant?: ButtonVariants
@@ -34,28 +34,26 @@ export function DecisionDeleteButton({
   }
 
   return (
-    <ResponsiveModal>
-      <ResponsiveModalTrigger asChild>
+    <Credenza>
+      <CredenzaTrigger asChild>
         <Button variant={variant}>
           <Icons.delete className="mr-2 h-4 w-4" />
           <span>Delete</span>
         </Button>
-      </ResponsiveModalTrigger>
-      <ResponsiveModalContent>
-        <ResponsiveModalHeader>
-          <ResponsiveModalTitle>
-            Do you to delete this decision?
-          </ResponsiveModalTitle>
-          <ResponsiveModalDescription>
+      </CredenzaTrigger>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>Do you to delete this decision?</CredenzaTitle>
+          <CredenzaDescription>
             This action cannot be undone!
-          </ResponsiveModalDescription>
-        </ResponsiveModalHeader>
-        <ResponsiveModalFooter>
-          <ResponsiveModalClose asChild>
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaFooter>
+          <CredenzaClose asChild>
             <Button onClick={() => deleteDecisionFn(id)}>Delete</Button>
-          </ResponsiveModalClose>
-        </ResponsiveModalFooter>
-      </ResponsiveModalContent>
-    </ResponsiveModal>
+          </CredenzaClose>
+        </CredenzaFooter>
+      </CredenzaContent>
+    </Credenza>
   )
 }

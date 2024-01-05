@@ -6,17 +6,17 @@ import { toast } from "sonner"
 
 import { generateId } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
 import {
-  ResponsiveModal,
-  ResponsiveModalClose,
-  ResponsiveModalContent,
-  ResponsiveModalDescription,
-  ResponsiveModalFooter,
-  ResponsiveModalHeader,
-  ResponsiveModalTitle,
-  ResponsiveModalTrigger,
-} from "@/components/responsive-modal"
+  Credenza,
+  CredenzaClose,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger,
+} from "@/components/ui/credenza"
+import { Icons } from "@/components/icons"
 
 interface DecisionAddButtonProps {
   variant?: ButtonVariants
@@ -38,28 +38,24 @@ export function DecisionAddButton({ variant }: DecisionAddButtonProps) {
   }
 
   return (
-    <ResponsiveModal>
-      <ResponsiveModalTrigger asChild>
+    <Credenza>
+      <CredenzaTrigger asChild>
         <Button variant={variant}>
           <Icons.add className="mr-2 h-4 w-4" />
           <span>Add Decision</span>
         </Button>
-      </ResponsiveModalTrigger>
-      <ResponsiveModalContent>
-        <ResponsiveModalHeader>
-          <ResponsiveModalTitle>
-            Do you want to create a new decision?
-          </ResponsiveModalTitle>
-          <ResponsiveModalDescription>
-            This will add a new card.
-          </ResponsiveModalDescription>
-        </ResponsiveModalHeader>
-        <ResponsiveModalFooter>
-          <ResponsiveModalClose asChild>
+      </CredenzaTrigger>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>Do you want to create a new decision?</CredenzaTitle>
+          <CredenzaDescription>This will add a new card.</CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaFooter>
+          <CredenzaClose asChild>
             <Button onClick={() => createDecision()}>Create</Button>
-          </ResponsiveModalClose>
-        </ResponsiveModalFooter>
-      </ResponsiveModalContent>
-    </ResponsiveModal>
+          </CredenzaClose>
+        </CredenzaFooter>
+      </CredenzaContent>
+    </Credenza>
   )
 }

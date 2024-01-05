@@ -68,14 +68,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background antialiased",
-          inter.className
-        )}
-      >
+      <body className={cn("antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <div vaul-drawer-wrapper="" className="min-h-screen bg-background">
+            {children}
+          </div>
           <ToastWrapper />
         </ThemeProvider>
       </body>

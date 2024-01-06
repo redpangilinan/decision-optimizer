@@ -32,3 +32,5 @@ export type ButtonVariants =
   | "secondary"
   | "ghost"
   | "link"
+
+export type ButtonSizes = "default" | "icon" | "sm" | "lg"

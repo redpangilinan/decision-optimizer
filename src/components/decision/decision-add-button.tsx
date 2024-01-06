@@ -1,7 +1,7 @@
 "use client"
 
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
-import { ButtonVariants } from "@/types"
+import { ButtonSizes, ButtonVariants } from "@/types"
 import { toast } from "sonner"
 
 import { generateId } from "@/lib/utils"
@@ -20,9 +20,10 @@ import { Icons } from "@/components/icons"
 
 interface DecisionAddButtonProps {
   variant?: ButtonVariants
+  size?: ButtonSizes
 }
 
-export function DecisionAddButton({ variant }: DecisionAddButtonProps) {
+export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
   const addDecision = useDecisionStore((state) => state.addDecision)
 
   const createDecision = () => {
@@ -40,9 +41,9 @@ export function DecisionAddButton({ variant }: DecisionAddButtonProps) {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button variant={variant}>
-          <Icons.add className="mr-2 h-4 w-4" />
-          <span>Add Decision</span>
+        <Button variant={variant} size={size}>
+          <Icons.add className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline-block">Add Decision</span>
         </Button>
       </CredenzaTrigger>
       <CredenzaContent>

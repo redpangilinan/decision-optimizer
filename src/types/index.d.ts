@@ -16,7 +16,6 @@ export type SiteConfig = {
 export type Decision = {
   id: string
   decision: string
-  description: string
   factors: Array<string>
 }
 

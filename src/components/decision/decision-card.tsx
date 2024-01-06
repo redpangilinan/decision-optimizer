@@ -5,7 +5,6 @@ import { Decision } from "@/types"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -21,8 +20,7 @@ export function DecisionCard({ data }: DecisionCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{data.decision}</CardTitle>
-        <CardDescription>{data.description}</CardDescription>
+        <CardTitle className="text-xl">{data.decision}</CardTitle>
       </CardHeader>
       <CardContent>
         <ul>

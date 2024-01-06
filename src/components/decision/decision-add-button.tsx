@@ -29,9 +29,8 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
   const createDecision = () => {
     const data = {
       id: generateId(),
-      decision: "Test",
-      description: "Test",
-      factors: ["Test"],
+      decision: "New Decision",
+      factors: [],
     }
 
     addDecision(data)

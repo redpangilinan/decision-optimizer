@@ -1,4 +1,3 @@
-import { FloatNav } from "@/components/layout/float-nav"
 import { Navbar } from "@/components/layout/navbar"
 
 interface MainLayoutProps {
@@ -7,10 +6,11 @@ interface MainLayoutProps {
 
 export default async function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="container">
-      <Navbar />
-      {children}
-      <FloatNav />
+    <div className="container flex justify-center">
+      <div className="w-full md:w-[768px]">
+        <Navbar />
+        {children}
+      </div>
     </div>
   )
 }

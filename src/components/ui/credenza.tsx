@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useMediaQuery } from "@/hooks/use-media-query"
 
+import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogClose,
@@ -117,6 +118,14 @@ const CredenzaTitle = ({ className, children, ...props }: CredenzaProps) => {
   )
 }
 
+const CredenzaBody = ({ className, children, ...props }: CredenzaProps) => {
+  return (
+    <div className={cn("px-4 md:px-0", className)} {...props}>
+      {children}
+    </div>
+  )
+}
+
 const CredenzaFooter = ({ className, children, ...props }: CredenzaProps) => {
   const isDesktop = useMediaQuery(desktop)
   const CredenzaFooter = isDesktop ? DialogFooter : DrawerFooter
@@ -136,5 +145,6 @@ export {
   CredenzaDescription,
   CredenzaHeader,
   CredenzaTitle,
+  CredenzaBody,
   CredenzaFooter,
 }

@@ -1,13 +1,19 @@
 "use client"
 
+import * as React from "react"
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
 import { ButtonSizes, ButtonVariants } from "@/types"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import * as z from "zod"
 
 import { generateId } from "@/lib/utils"
+import { decisionSchema } from "@/lib/validations/decision"
 import { Button } from "@/components/ui/button"
 import {
   Credenza,
+  CredenzaBody,
   CredenzaClose,
   CredenzaContent,
   CredenzaDescription,
@@ -16,6 +22,16 @@ import {
   CredenzaTitle,
   CredenzaTrigger,
 } from "@/components/ui/credenza"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
 interface DecisionAddButtonProps {
@@ -23,22 +39,34 @@ interface DecisionAddButtonProps {
   size?: ButtonSizes
 }
 
-export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
-  const addDecision = useDecisionStore((state) => state.addDecision)
+type FormData = z.infer<typeof decisionSchema>
 
-  const createDecision = () => {
+export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const addDecision = useDecisionStore((state) => state.addDecision)
+  const form = useForm<FormData>({
+    resolver: zodResolver(decisionSchema),
+    defaultValues: {
+      name: "",
+    },
+  })
+
+  function onSubmit(values: FormData) {
     const data = {
       id: generateId(),
-      decision: "New Decision",
+      decision: values.name,
       factors: [],
     }
 
     addDecision(data)
     toast.success("Decision created successfully!")
+
+    form.reset()
+    setIsOpen(false)
   }
 
   return (
-    <Credenza>
+    <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaTrigger asChild>
         <Button variant={variant} size={size}>
           <Icons.add className="h-4 w-4 sm:mr-2" />
@@ -50,11 +78,28 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
           <CredenzaTitle>Do you want to create a new decision?</CredenzaTitle>
           <CredenzaDescription>This will add a new card.</CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaFooter>
-          <CredenzaClose asChild>
-            <Button onClick={() => createDecision()}>Create</Button>
-          </CredenzaClose>
-        </CredenzaFooter>
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <CredenzaBody>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Input a decision</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g Take a rest" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CredenzaBody>
+            <CredenzaFooter>
+              <Button type="submit">Create</Button>
+            </CredenzaFooter>
+          </form>
+        </Form>
       </CredenzaContent>
     </Credenza>
   )

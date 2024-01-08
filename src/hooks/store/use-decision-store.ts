@@ -1,4 +1,4 @@
-import { Decision } from "@/types"
+import { Decision, Factor } from "@/types"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
@@ -10,6 +10,7 @@ export const useDecisionStore = create(
           decisions: Decision[]
           addDecision: (decision: Decision) => void
           deleteDecision: (decisionId: string) => void
+          addFactor: (decisionId: string, factor: Factor) => void
         }) => void
       ) => void
     ) => ({
@@ -22,6 +23,17 @@ export const useDecisionStore = create(
             (decision: Decision) => decision.id !== decisionId
           ),
         })),
+      addFactor: (decisionId: string, factor: Factor) =>
+        set((state) => {
+          const updatedDecisions = state.decisions.map((decision) => {
+            if (decision.id === decisionId) {
+              return { ...decision, factors: [...decision.factors, factor] }
+            }
+            return decision
+          })
+
+          return { decisions: updatedDecisions }
+        }),
     }),
     {
       name: "decision-store",

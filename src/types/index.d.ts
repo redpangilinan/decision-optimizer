@@ -16,7 +16,15 @@ export type SiteConfig = {
 export type Decision = {
   id: string
   decision: string
-  factors: Array<string>
+  factors: Array<Factor>
+}
+
+export type Factor = {
+  id: string
+  factor: string
+  score: number
+  weight: number
+  type: "positive" | "negative"
 }
 
 export type LocalStorageContextType = {

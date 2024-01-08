@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 
 import { DecisionDeleteButton } from "./decision-delete-button"
+import { FactorAddButton } from "./factor/factor-add-button"
 
 interface DecisionCardProps {
   data: Decision
@@ -25,9 +26,12 @@ export function DecisionCard({ data }: DecisionCardProps) {
       <CardContent>
         <ul>
           {data.factors.map((factor) => (
-            <li key={factor}>{factor}</li>
+            <li key={factor.id}>
+              {factor.factor} - {factor.score} - {factor.weight} - {factor.type}
+            </li>
           ))}
         </ul>
+        <FactorAddButton variant="ghost" decisionId={data.id} />
       </CardContent>
       <CardFooter className="flex justify-between">
         <DecisionDeleteButton id={data.id} />

@@ -45,14 +45,14 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(decisionSchema),
     defaultValues: {
-      name: "",
+      decision: "",
     },
   })
 
   function onSubmit(values: FormData) {
     const data = {
       id: generateId(),
-      decision: values.name,
+      decision: values.decision,
       factors: [],
     }
 
@@ -81,12 +81,16 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
             <CredenzaBody>
               <FormField
                 control={form.control}
-                name="name"
+                name="decision"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Input a decision</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g Take a rest" {...field} />
+                      <Input
+                        placeholder="e.g Take a rest"
+                        {...field}
+                        autoComplete="off"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -1,5 +1,5 @@
 import * as z from "zod"
 
 export const decisionSchema = z.object({
-  name: z.string().min(3).max(64),
+  decision: z.string().min(3).max(64),
 })

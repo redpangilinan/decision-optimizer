@@ -1,3 +1,5 @@
+import { FactorType, Importance } from "@/types/enum"
+
 export type SiteConfig = {
   name: string
   author: string
@@ -22,22 +24,12 @@ export type Decision = {
 export type Factor = {
   id: string
   factor: string
-  score: number
-  weight: number
-  type: "positive" | "negative"
+  value: number
+  importance: Importance
+  type: FactorType
 }
 
 export type LocalStorageContextType = {
   readLocalStorage: (key: string) => string | null
   setLocalStorage: (key: string, value: string) => void
 }
-
-export type ButtonVariants =
-  | "default"
-  | "destructive"
-  | "outline"
-  | "secondary"
-  | "ghost"
-  | "link"
-
-export type ButtonSizes = "default" | "icon" | "sm" | "lg"

@@ -11,6 +11,7 @@ export const useDecisionStore = create(
           addDecision: (decision: Decision) => void
           deleteDecision: (decisionId: string) => void
           addFactor: (decisionId: string, factor: Factor) => void
+          deleteFactor: (decisionId: string, factorId: string) => void
         }) => void
       ) => void
     ) => ({
@@ -28,6 +29,22 @@ export const useDecisionStore = create(
           const updatedDecisions = state.decisions.map((decision) => {
             if (decision.id === decisionId) {
               return { ...decision, factors: [...decision.factors, factor] }
+            }
+            return decision
+          })
+
+          return { decisions: updatedDecisions }
+        }),
+      deleteFactor: (decisionId: string, factorId: string) =>
+        set((state) => {
+          const updatedDecisions = state.decisions.map((decision) => {
+            if (decision.id === decisionId) {
+              return {
+                ...decision,
+                factors: decision.factors.filter(
+                  (factor: Factor) => factor.id !== factorId
+                ),
+              }
             }
             return decision
           })

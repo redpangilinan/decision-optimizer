@@ -2,12 +2,17 @@
 
 import * as React from "react"
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
-import { ButtonSizes, ButtonVariants } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import {
+  ButtonSizes,
+  ButtonVariants,
+  FactorType,
+  Importance,
+} from "@/types/enum"
 import { generateId } from "@/lib/utils"
 import { factorSchema } from "@/lib/validations/factor"
 import { Button } from "@/components/ui/button"
@@ -22,6 +27,15 @@ import {
   CredenzaTrigger,
 } from "@/components/ui/credenza"
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
   Form,
   FormControl,
   FormField,
@@ -30,20 +44,21 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Slider } from "@/components/ui/slider"
 import { Icons } from "@/components/icons"
 
 interface FactorAddButtonProps {
-  decisionId: string
   variant?: ButtonVariants
   size?: ButtonSizes
+  decisionId: string
 }
 
 type FormData = z.infer<typeof factorSchema>
 
 export function FactorAddButton({
-  decisionId,
   variant,
   size,
+  decisionId,
 }: FactorAddButtonProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   const addFactor = useDecisionStore((state) => state.addFactor)
@@ -51,21 +66,22 @@ export function FactorAddButton({
     resolver: zodResolver(factorSchema),
     defaultValues: {
       factor: "",
+      value: [50],
+      importance: "Important",
+      type: "Positive",
     },
   })
 
-  function onSubmit(values: FormData) {
-    const data = {
+  function onSubmit(data: FormData) {
+    const factor = {
       id: generateId(),
-      factor: values.factor,
-      score: Number(values.score),
-      weight: Number(values.weight),
-      type: values.type as "positive" | "negative",
+      factor: data.factor,
+      value: data.value[0],
+      importance: data.importance as Importance,
+      type: data.type as FactorType,
     }
 
-    console.log(data)
-
-    addFactor(decisionId, data)
+    addFactor(decisionId, factor)
     toast.success("Factor created successfully!")
 
     form.reset()
@@ -82,76 +98,116 @@ export function FactorAddButton({
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>Do you want to create a new decision?</CredenzaTitle>
-          <CredenzaDescription>This will add a new card.</CredenzaDescription>
+          <CredenzaTitle>Do you want to create a new factor?</CredenzaTitle>
+          <CredenzaDescription>
+            This will add a new factor for the decision.
+          </CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-            <CredenzaBody>
+            <CredenzaBody className="space-y-4">
               <FormField
                 control={form.control}
                 name="factor"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Input a factor</FormLabel>
+                    <FormLabel>Factor Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="e.g Enjoyment"
-                        {...field}
                         autoComplete="off"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              <div className="grid grid-cols-2 gap-2">
+                <FormField
+                  control={form.control}
+                  name="importance"
+                  render={({ field: { value, onChange } }) => (
+                    <FormItem className="space-x-2">
+                      <FormControl>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button className="w-full" variant="outline">
+                              {value}
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="w-56">
+                            <DropdownMenuLabel>
+                              Factor Importance
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuRadioGroup onValueChange={onChange}>
+                              <DropdownMenuRadioItem value="Very Important">
+                                Very Important
+                              </DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value="Important">
+                                Important
+                              </DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value="Neutral">
+                                Neutral
+                              </DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value="Unimportant">
+                                Unimportant
+                              </DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value="Very Unimportant">
+                                Very Unimportant
+                              </DropdownMenuRadioItem>
+                            </DropdownMenuRadioGroup>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field: { value, onChange } }) => (
+                    <FormItem className="space-x-2">
+                      <FormControl>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button className="w-full" variant="outline">
+                              {value}
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="w-56">
+                            <DropdownMenuLabel>Factor Type</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuRadioGroup onValueChange={onChange}>
+                              <DropdownMenuRadioItem value="Positive">
+                                Positive
+                              </DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value="Negative">
+                                Negative
+                              </DropdownMenuRadioItem>
+                            </DropdownMenuRadioGroup>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
-                name="score"
-                render={({ field }) => (
+                name="value"
+                render={({ field: { value, onChange } }) => (
                   <FormItem>
-                    <FormLabel>Input score</FormLabel>
+                    <FormLabel>Value - {value}</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="e.g 10"
-                        {...field}
-                        autoComplete="off"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="weight"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Input weight</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="e.g 0.8"
-                        {...field}
-                        autoComplete="off"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Input type</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="positive or negative"
-                        {...field}
-                        autoComplete="off"
+                      <Slider
+                        defaultValue={value}
+                        max={100}
+                        step={1}
+                        onValueChange={onChange}
                       />
                     </FormControl>
                     <FormMessage />

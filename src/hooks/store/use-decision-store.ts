@@ -1,26 +1,21 @@
-import { Decision, Factor } from "@/types"
+import { Decision, DecisionStore, Factor } from "@/types"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
+interface Store {
+  decisions: Decision[]
+}
+
 export const useDecisionStore = create(
-  persist(
-    (
-      set: (
-        fn: (state: {
-          decisions: Decision[]
-          addDecision: (decision: Decision) => void
-          deleteDecision: (decisionId: string) => void
-          clearDecisions: () => void
-          addFactor: (decisionId: string, factor: Factor) => void
-          deleteFactor: (decisionId: string, factorId: string) => void
-        }) => void
-      ) => void
-    ) => ({
+  persist<DecisionStore>(
+    (set) => ({
       decisions: [],
       addDecision: (decision: Decision) =>
-        set((state) => ({ decisions: [...state.decisions, decision] })),
+        set((state: Store) => ({
+          decisions: [...state.decisions, decision],
+        })),
       deleteDecision: (decisionId: string) =>
-        set((state) => ({
+        set((state: Store) => ({
           decisions: state.decisions.filter(
             (decision: Decision) => decision.id !== decisionId
           ),
@@ -30,7 +25,7 @@ export const useDecisionStore = create(
           decisions: [],
         })),
       addFactor: (decisionId: string, factor: Factor) =>
-        set((state) => {
+        set((state: Store) => {
           const updatedDecisions = state.decisions.map((decision) => {
             if (decision.id === decisionId) {
               return { ...decision, factors: [...decision.factors, factor] }
@@ -41,7 +36,7 @@ export const useDecisionStore = create(
           return { decisions: updatedDecisions }
         }),
       deleteFactor: (decisionId: string, factorId: string) =>
-        set((state) => {
+        set((state: Store) => {
           const updatedDecisions = state.decisions.map((decision) => {
             if (decision.id === decisionId) {
               return {

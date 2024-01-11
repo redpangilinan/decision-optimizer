@@ -83,7 +83,7 @@ export function ResultsContent() {
       ) : (
         <p className="pb-2">{getDecisionMessage(decisions)}</p>
       )}
-      {decisions.map((decision: Decision, index) => {
+      {decisions.map((decision: Decision, index: number) => {
         return (
           <Card
             className={cn(

@@ -27,9 +27,13 @@ export type Factor = {
   type: FactorType
 }
 
-export type LocalStorageContextType = {
-  readLocalStorage: (key: string) => string | null
-  setLocalStorage: (key: string, value: string) => void
+export type DecisionStore = {
+  decisions: Decision[]
+  addDecision: (decision: Decision) => void
+  deleteDecision: (decisionId: string) => void
+  clearDecisions: () => void
+  addFactor: (decisionId: string, factor: Factor) => void
+  deleteFactor: (decisionId: string, factorId: string) => void
 }
 
 // Enum

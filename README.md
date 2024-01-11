@@ -1,47 +1,50 @@
-# Next Entree
+# Decision Optimizer
 
-Next.js 14+ starter template with app router, shadcn/ui, typesafe env, icons and configs setup.
+A decision optimization web tool built with Next.js 14 app router.
 
-## Usage
+> **Notice:** This app is work in progress.
 
-- pnpm
+## Tech Stack
 
-```bash
-pnpm create next-app -e https://github.com/redpangilinan/next-entree
+- Next.js 14 app router - Framework
+- TypeScript - Language
+- Tailwind - CSS Framework
+- shadcn/ui - UI Components
+- Zustand - State Management
+- Zod - Validation
+
+## Decision Factors
+
+Each factor includes the following:
+- **Name**: A descriptive name for the factor (e.g., Enjoyment, Convenience)
+- **Value**: A numerical value representing the worth of the factor (e.g., 1-100)
+- **Importance**: A weight multiplier assigned to the factor based on its importance
+  - Very Important (1.4x)
+  - Important (1.2x)
+  - Neutral (1x)
+  - Unimportant (0.8x)
+  - Very Unimportant (0.6x)
+- **Type**: Indicates whether the factor is positive or negative
+
+## Formula
+
+Sum of factor values
+
+```
+∑(FactorValue * ImportanceWeight)
 ```
 
-- npm
+Overall Decision Value
 
-```bash
-npx create-next-app -e https://github.com/redpangilinan/next-entree
+```
+(PositiveSum - NegativeSum) / FactorLength
 ```
 
-## Features
+## Work in progress
 
-This template uses [shadcn](https://github.com/shadcn)'s Next.js app structure from [shadcn/ui](https://ui.shadcn.com/).
-
-- Next.js 14+ `/app` router
-- TypeScript
-- Tailwind CSS
-- shadcn/ui (Radix UI + Tailwind)
-- Typesafe env, icons, and config
-- Prettier auto sort imports and tailwind classes
-- Ready to use - jump right into development
-
-## Scripts
-
-1. Check project formatting
-
-```bash
-pnpm format:check
-# or
-npm run format:check
-```
-
-2. Format the project
-
-```bash
-pnpm format:write
-# or
-npm run format:write
-```
+- Decision risks
+  - Lower multiplier for high risk decisions
+  - Separate results with normal multiplier for high risk decisions to show non-optimal but big payoff decisions
+- AI integration (unsure)
+  - Auto generate decisions based on the goal or situation
+  - Auto generate factors based on the decision

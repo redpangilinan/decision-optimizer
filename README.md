@@ -17,7 +17,7 @@ A decision optimization web tool built with Next.js 14 app router.
 
 Each factor includes the following:
 - **Name**: A descriptive name for the factor (e.g., Enjoyment, Convenience)
-- **Value**: A numerical value representing the worth of the factor (e.g., 1-100)
+- **Value**: A numerical value representing the worth of the factor (e.g., 50-100)
 - **Importance**: A weight multiplier assigned to the factor based on its importance
   - Very Important (1.4x)
   - Important (1.2x)

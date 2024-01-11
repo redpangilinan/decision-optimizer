@@ -10,6 +10,7 @@ export const useDecisionStore = create(
           decisions: Decision[]
           addDecision: (decision: Decision) => void
           deleteDecision: (decisionId: string) => void
+          clearDecisions: () => void
           addFactor: (decisionId: string, factor: Factor) => void
           deleteFactor: (decisionId: string, factorId: string) => void
         }) => void
@@ -23,6 +24,10 @@ export const useDecisionStore = create(
           decisions: state.decisions.filter(
             (decision: Decision) => decision.id !== decisionId
           ),
+        })),
+      clearDecisions: () =>
+        set(() => ({
+          decisions: [],
         })),
       addFactor: (decisionId: string, factor: Factor) =>
         set((state) => {

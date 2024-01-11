@@ -1,15 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { useDecisionStore } from "@/hooks/store/use-decision-store"
-import { ButtonSizes, ButtonVariants } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { ButtonSizes, ButtonVariants } from "@/types/enum"
 import { generateId } from "@/lib/utils"
 import { decisionSchema } from "@/lib/validations/decision"
+import { useDecisionStore } from "@/hooks/store/use-decision-store"
 import { Button } from "@/components/ui/button"
 import {
   Credenza,
@@ -67,8 +67,8 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
     <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaTrigger asChild>
         <Button variant={variant} size={size}>
-          <Icons.add className="h-4 w-4 sm:mr-2" />
-          <span className="hidden sm:inline-block">Add Decision</span>
+          <Icons.add className="mr-2 h-4 w-4" />
+          <span>Add Decision</span>
         </Button>
       </CredenzaTrigger>
       <CredenzaContent>

@@ -1,7 +1,8 @@
 "use client"
 
-import { useMediaQuery } from "@/hooks/use-media-query"
 import { Toaster } from "sonner"
+
+import { useMediaQuery } from "@/hooks/use-media-query"
 
 export function ToastWrapper() {
   const isDesktop = useMediaQuery("(min-width: 768px)")

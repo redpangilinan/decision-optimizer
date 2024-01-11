@@ -1,5 +1,3 @@
-import { FactorType, Importance } from "@/types/enum"
-
 export type SiteConfig = {
   name: string
   author: string
@@ -33,3 +31,23 @@ export type LocalStorageContextType = {
   readLocalStorage: (key: string) => string | null
   setLocalStorage: (key: string, value: string) => void
 }
+
+// Enum
+export type ButtonVariants =
+  | "default"
+  | "destructive"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "link"
+
+export type ButtonSizes = "default" | "icon" | "sm" | "lg"
+
+export type Importance =
+  | "Very Important"
+  | "Important"
+  | "Neutral"
+  | "Unimportant"
+  | "Very Unimportant"
+
+export type FactorType = "Positive" | "Negative"

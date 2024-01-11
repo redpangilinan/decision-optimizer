@@ -1,12 +1,12 @@
 "use client"
 
 import * as React from "react"
+import { ButtonSizes, ButtonVariants } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { ButtonSizes, ButtonVariants } from "@/types/enum"
 import { generateId } from "@/lib/utils"
 import { decisionSchema } from "@/lib/validations/decision"
 import { useDecisionStore } from "@/hooks/store/use-decision-store"

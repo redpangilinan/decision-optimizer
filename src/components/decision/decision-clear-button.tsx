@@ -1,8 +1,8 @@
 "use client"
 
+import { ButtonSizes, ButtonVariants } from "@/types"
 import { toast } from "sonner"
 
-import { ButtonSizes, ButtonVariants } from "@/types/enum"
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
 import { Button } from "@/components/ui/button"
 import {

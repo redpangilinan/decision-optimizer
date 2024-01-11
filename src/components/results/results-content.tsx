@@ -70,7 +70,7 @@ export function ResultsContent() {
     }
   }
 
-  decisions.sort((a, b) => {
+  decisions.sort((a: Decision, b: Decision) => {
     const valueA = parseFloat(getDecisionValue(a.factors))
     const valueB = parseFloat(getDecisionValue(b.factors))
     return valueB - valueA

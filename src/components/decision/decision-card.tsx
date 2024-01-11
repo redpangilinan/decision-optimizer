@@ -1,5 +1,3 @@
-"use client"
-
 import { Decision } from "@/types"
 
 import {
@@ -20,30 +18,41 @@ interface DecisionCardProps {
 
 export function DecisionCard({ data }: DecisionCardProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl">{data.decision}</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        {data.factors.map((factor) => (
-          <Card className="flex justify-between p-4" key={factor.id}>
-            <div className="flex items-center">
-              {factor.factor} - {factor.value} - {factor.importance} -{" "}
-              {factor.type}
-            </div>
-            <FactorDeleteButton
-              variant="ghost"
-              size="icon"
-              decisionId={data.id}
-              factorId={factor.id}
-              key={factor.id}
-            ></FactorDeleteButton>
-          </Card>
-        ))}
-        <FactorAddButton variant="ghost" decisionId={data.id} />
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <DecisionDeleteButton id={data.id} />
+    <Card className="flex flex-col justify-between">
+      <div>
+        <CardHeader>
+          <CardTitle className="text-xl">{data.decision}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-1">
+          {data.factors.length === 0 ? (
+            <div>No factors available.</div>
+          ) : (
+            data.factors.map((factor) => (
+              <div className="flex justify-between" key={factor.id}>
+                <div
+                  className={`flex items-center ${
+                    factor.type === "Positive"
+                      ? "text-green-700 dark:text-green-400"
+                      : "text-red-700 dark:text-red-400"
+                  }`}
+                >
+                  {factor.factor} ({factor.value}) - {factor.importance}
+                </div>
+                <FactorDeleteButton
+                  variant="ghost"
+                  size="icon"
+                  decisionId={data.id}
+                  factorId={factor.id}
+                  key={factor.id}
+                ></FactorDeleteButton>
+              </div>
+            ))
+          )}
+        </CardContent>
+      </div>
+      <CardFooter className="grid grid-cols-2 gap-2">
+        <FactorAddButton decisionId={data.id} />
+        <DecisionDeleteButton variant="destructive" id={data.id} />
       </CardFooter>
     </Card>
   )

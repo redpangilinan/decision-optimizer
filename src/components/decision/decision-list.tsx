@@ -1,5 +1,7 @@
 "use client"
 
+import { Decision } from "@/types"
+
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
 import { useStore } from "@/hooks/use-store"
 
@@ -14,7 +16,7 @@ export function DecisionList() {
 
   return (
     <>
-      {decisions.map((decision) => (
+      {decisions.map((decision: Decision) => (
         <DecisionCard key={decision.id} data={decision} />
       ))}
     </>

@@ -83,7 +83,7 @@ export function ResultsContent() {
       ) : (
         <p className="pb-2">{getDecisionMessage(decisions)}</p>
       )}
-      {decisions.map((decision, index) => {
+      {decisions.map((decision: Decision, index) => {
         return (
           <Card
             className={cn(
@@ -96,9 +96,9 @@ export function ResultsContent() {
                     ? "border-[#CD7F32]"
                     : ""
             )}
-            key={decision?.id}
+            key={decision.id}
           >
-            {decision?.decision} ({getDecisionValue(decision?.factors)})
+            {decision.decision} ({getDecisionValue(decision.factors)})
           </Card>
         )
       })}

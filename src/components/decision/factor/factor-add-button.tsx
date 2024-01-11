@@ -66,7 +66,7 @@ export function FactorAddButton({
     resolver: zodResolver(factorSchema),
     defaultValues: {
       factor: "",
-      value: [50],
+      value: [75],
       importance: "Important",
       type: "Positive",
     },
@@ -205,6 +205,7 @@ export function FactorAddButton({
                     <FormControl>
                       <Slider
                         defaultValue={value}
+                        min={50}
                         max={100}
                         step={1}
                         onValueChange={onChange}

@@ -31,7 +31,7 @@ Each factor includes the following:
 Normalized Decision Factor Values (PositiveSum & NegativeSum)
 
 ```
-∑(((FactorValue * ImportanceWeight) - MinValue) / (MaxValue - MinValue))
+∑(((FactorValue - 50) / (100 - 50)) * ImportanceWeight)
 ```
 
 Overall Decision Value

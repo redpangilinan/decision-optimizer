@@ -10,7 +10,7 @@ export function ResultsContent() {
   const decisionStore = useDecisionStore()
   const decisions = decisionStore.decisions
 
-  const getFactorScore = (factor: Factor) => {
+  const getWeightedFactorValue = (factor: Factor) => {
     const importanceMultiplier = getMultiplier(factor.importance, [
       { case: "Very Unimportant", value: 0.6 },
       { case: "Unimportant", value: 0.8 },
@@ -22,17 +22,78 @@ export function ResultsContent() {
     return factor.value * importanceMultiplier
   }
 
-  const getDecisionValue = (factors: Factor[]) => {
-    const positiveSum = factors
-      .filter((factor) => factor.type === "Positive")
-      .reduce((sum, factor) => sum + getFactorScore(factor), 0)
+  const getNormalizedFactorValue = (
+    factor: Factor,
+    minValue: number,
+    maxValue: number
+  ) => {
+    const normalizedFactorValue =
+      (getWeightedFactorValue(factor) - minValue) / (maxValue - minValue)
+    if (normalizedFactorValue === undefined || isNaN(normalizedFactorValue)) {
+      return 1
+    }
 
-    const negativeSum = factors
-      .filter((factor) => factor.type === "Negative")
-      .reduce((sum, factor) => sum + getFactorScore(factor), 0)
+    return normalizedFactorValue
+  }
+
+  const getDecisionValue = (factors: Factor[]) => {
+    const positiveFactors = factors.filter(
+      (factor) => factor.type === "Positive"
+    )
+    const negativeFactors = factors.filter(
+      (factor) => factor.type === "Negative"
+    )
+
+    const positiveMinValue =
+      positiveFactors.length > 0
+        ? Math.min(
+            ...positiveFactors.map((factor) => getWeightedFactorValue(factor))
+          )
+        : 1
+    const positiveMaxValue =
+      positiveFactors.length > 0
+        ? Math.max(
+            ...positiveFactors.map((factor) => getWeightedFactorValue(factor))
+          )
+        : 1
+
+    const negativeMinValue =
+      negativeFactors.length > 0
+        ? Math.min(
+            ...negativeFactors.map((factor) => getWeightedFactorValue(factor))
+          )
+        : 1
+    const negativeMaxValue =
+      negativeFactors.length > 0
+        ? Math.max(
+            ...negativeFactors.map((factor) => getWeightedFactorValue(factor))
+          )
+        : 1
+
+    const positiveSum = positiveFactors.reduce((sum, factor) => {
+      const normalizedValue = getNormalizedFactorValue(
+        factor,
+        positiveMinValue,
+        positiveMaxValue
+      )
+      return positiveFactors.length > 0 ? sum + normalizedValue : 1
+    }, 0)
+
+    const negativeSum = negativeFactors.reduce((sum, factor) => {
+      const normalizedValue = getNormalizedFactorValue(
+        factor,
+        negativeMinValue,
+        negativeMaxValue
+      )
+      return negativeFactors.length > 0 ? sum + normalizedValue : 1
+    }, 0)
 
     const decisionValue =
-      factors.length > 0 ? (positiveSum - negativeSum) / factors.length : 0
+      factors.length > 0
+        ? ((positiveSum - negativeSum) / factors.length) * 50 + 50
+        : 0
+
+    console.log("decisionValue:", decisionValue)
 
     return Number.isInteger(decisionValue)
       ? decisionValue.toFixed(0)

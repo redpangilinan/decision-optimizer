@@ -28,16 +28,16 @@ Each factor includes the following:
 
 ## Formula
 
-Sum of factor values
+Normalized Decision Factor Values (PositiveSum & NegativeSum)
 
 ```
-∑(FactorValue * ImportanceWeight)
+∑(((FactorValue * ImportanceWeight) - MinValue) / (MaxValue - MinValue))
 ```
 
 Overall Decision Value
 
 ```
-(PositiveSum - NegativeSum) / FactorLength
+((PositiveSum - NegativeSum) / FactorLength) * 50 + 50
 ```
 
 ## Work in progress

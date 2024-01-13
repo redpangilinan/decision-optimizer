@@ -17,21 +17,20 @@ A decision optimization web tool built with Next.js 14 app router.
 
 Each factor includes the following:
 - **Name**: A descriptive name for the factor (e.g., Enjoyment, Convenience)
-- **Value**: A numerical value representing the worth of the factor (e.g., 50-100)
-- **Importance**: A weight multiplier assigned to the factor based on its importance
-  - Very Important (1.4x)
-  - Important (1.2x)
-  - Neutral (1x)
-  - Unimportant (0.8x)
-  - Very Unimportant (0.6x)
+- **Importance**: A value assigned to the factor based on its importance
+  - Very Important (5)
+  - Important (4)
+  - Neutral (3)
+  - Unimportant (2)
+  - Very Unimportant (1)
 - **Type**: Indicates whether the factor is positive or negative
 
 ## Formula
 
-Normalized Decision Factor Values (PositiveSum & NegativeSum)
+Normalized Decision Value Sum (PositiveSum & NegativeSum)
 
 ```
-∑(((FactorValue - 50) / (100 - 50)) * ImportanceWeight)
+∑((ImportanceValue - 1) / (5 - 1))
 ```
 
 Overall Decision Value

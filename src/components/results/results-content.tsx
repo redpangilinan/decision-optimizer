@@ -121,7 +121,7 @@ export function ResultsContent() {
             )}
             key={decision.id}
           >
-            {decision.decision} ({getDecisionValue(decision.factors)})
+            {decision.decision} ({getDecisionValue(decision.factors)}%)
             {decision.factors.length < 2 && (
               <div className="text-destructive">
                 You need at least two factors

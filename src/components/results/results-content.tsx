@@ -10,25 +10,25 @@ export function ResultsContent() {
   const decisionStore = useDecisionStore()
   const decisions = decisionStore.decisions
 
-  const getImportanceMultiplier = (factor: Factor) => {
-    const importanceMultiplier = getMultiplier(factor.importance, [
-      { case: "Very Unimportant", value: 0.6 },
-      { case: "Unimportant", value: 0.8 },
-      { case: "Neutral", value: 1.0 },
-      { case: "Important", value: 1.2 },
-      { case: "Very Important", value: 1.4 },
+  const getImportanceValue = (factor: Factor) => {
+    const importanceValue = getMultiplier(factor.importance, [
+      { case: "Very Unimportant", value: 1 },
+      { case: "Unimportant", value: 2 },
+      { case: "Neutral", value: 3 },
+      { case: "Important", value: 4 },
+      { case: "Very Important", value: 5 },
     ])
 
-    return importanceMultiplier
+    return importanceValue
   }
 
   const getNormalizedFactorValue = (factor: Factor) => {
-    const normalizedFactorValue = (factor.value - 50) / (100 - 50)
+    const normalizedFactorValue = (getImportanceValue(factor) - 1) / (5 - 1)
     if (normalizedFactorValue === undefined || isNaN(normalizedFactorValue)) {
       return 1
     }
 
-    return normalizedFactorValue * getImportanceMultiplier(factor)
+    return normalizedFactorValue
   }
 
   const sumFactors = (factors: Factor[]) => {
@@ -53,7 +53,7 @@ export function ResultsContent() {
     const negativeSum = sumFactors(negativeFactors)
 
     const decisionValue =
-      factors.length > 2
+      factors.length > 1
         ? ((positiveSum - negativeSum) / factors.length) * 50 + 50
         : 0
 
@@ -122,9 +122,9 @@ export function ResultsContent() {
             key={decision.id}
           >
             {decision.decision} ({getDecisionValue(decision.factors)})
-            {decision.factors.length < 3 && (
-              <div className="text-red-500">
-                You need at least three factors
+            {decision.factors.length < 2 && (
+              <div className="text-destructive">
+                You need at least two factors
               </div>
             )}
           </Card>

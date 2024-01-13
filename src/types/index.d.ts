@@ -22,7 +22,6 @@ export type Decision = {
 export type Factor = {
   id: string
   factor: string
-  value: number
   importance: Importance
   type: FactorType
 }

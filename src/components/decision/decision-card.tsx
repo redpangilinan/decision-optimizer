@@ -36,7 +36,7 @@ export function DecisionCard({ data }: DecisionCardProps) {
                       : "text-red-700 dark:text-red-400"
                   }`}
                 >
-                  {factor.factor} ({factor.value}) - {factor.importance}
+                  {factor.factor} ({factor.importance})
                 </div>
                 <FactorDeleteButton
                   variant="ghost"

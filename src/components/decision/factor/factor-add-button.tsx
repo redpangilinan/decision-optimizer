@@ -39,7 +39,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Slider } from "@/components/ui/slider"
 import { Icons } from "@/components/icons"
 
 interface FactorAddButtonProps {
@@ -61,7 +60,6 @@ export function FactorAddButton({
     resolver: zodResolver(factorSchema),
     defaultValues: {
       factor: "",
-      value: [75],
       importance: "Important",
       type: "Positive",
     },
@@ -71,7 +69,6 @@ export function FactorAddButton({
     const factor = {
       id: generateId(),
       factor: data.factor,
-      value: data.value[0],
       importance: data.importance as Importance,
       type: data.type as FactorType,
     }
@@ -191,25 +188,6 @@ export function FactorAddButton({
                   )}
                 />
               </div>
-              <FormField
-                control={form.control}
-                name="value"
-                render={({ field: { value, onChange } }) => (
-                  <FormItem>
-                    <FormLabel>Value - {value}</FormLabel>
-                    <FormControl>
-                      <Slider
-                        defaultValue={value}
-                        min={50}
-                        max={100}
-                        step={1}
-                        onValueChange={onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </CredenzaBody>
             <CredenzaFooter>
               <Button type="submit">Create</Button>

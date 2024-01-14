@@ -54,6 +54,7 @@ export function DecisionAddButton({ variant, size }: DecisionAddButtonProps) {
       id: generateId(),
       decision: values.decision,
       factors: [],
+      createdAt: new Date(),
     }
 
     addDecision(data)

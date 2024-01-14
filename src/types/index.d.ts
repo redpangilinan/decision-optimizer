@@ -17,6 +17,7 @@ export type Decision = {
   id: string
   decision: string
   factors: Array<Factor>
+  createdAt: Date
 }
 
 export type Factor = {

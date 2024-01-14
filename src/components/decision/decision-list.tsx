@@ -1,7 +1,5 @@
 "use client"
 
-import { Decision } from "@/types"
-
 import { useDecisionStore } from "@/hooks/store/use-decision-store"
 import { useStore } from "@/hooks/use-store"
 
@@ -16,9 +14,14 @@ export function DecisionList() {
 
   return (
     <>
-      {decisions.map((decision: Decision) => (
-        <DecisionCard key={decision.id} data={decision} />
-      ))}
+      {[...decisions]
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        )
+        .map((decision) => (
+          <DecisionCard key={decision.id} data={decision} />
+        ))}
     </>
   )
 }

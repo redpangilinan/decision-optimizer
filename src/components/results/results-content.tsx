@@ -68,26 +68,16 @@ export function ResultsContent() {
     )
 
     const maxDecisionValue = Math.max(...decisionValues)
-    const uniqueDecisionValues = Array.from(new Set(decisionValues))
 
-    if (uniqueDecisionValues.length === 1) {
-      if (decisionValues[0] >= 0) {
-        return "You can't go wrong with any of the top decisions."
-      } else {
-        return "All the top decisions are negative but equally the most optimal."
-      }
+    if (
+      decisionValues[0] === decisionValues[1] &&
+      decisionValues[0] === decisionValues[2]
+    ) {
+      return "You can't go wrong with any of the top decisions."
     } else if (decisionValues[0] === decisionValues[1]) {
-      if (decisionValues[0] >= 0) {
-        return `Both ${decisions[0]?.decision} and ${decisions[1]?.decision} are the best decisions. You can pick either one.`
-      } else {
-        return `All decisions are negative but ${decisions[0]?.decision} and ${decisions[1]?.decision} is the most optimal.`
-      }
+      return `Both ${decisions[0]?.decision} and ${decisions[1]?.decision} are the best decisions. You can pick either one.`
     } else if (decisionValues[0] === maxDecisionValue) {
-      if (decisionValues[0] >= 0) {
-        return `${decisions[0]?.decision} is the most optimal decision.`
-      } else {
-        return `All decisions are negative but ${decisions[0]?.decision} is the most optimal.`
-      }
+      return `${decisions[0]?.decision} is the most optimal decision.`
     } else {
       return "No optimal decision found."
     }
